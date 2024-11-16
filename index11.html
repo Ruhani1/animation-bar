@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar Animation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+      background-image: url('path/to/your/background-image.jpg'); /* Replace with actual path */
+      background-repeat: repeat;
+     
+    }
+
+    #animationContainer {
+      width: 600px;
+      height: 200px;
+      background-color: #000;
+      display: flex;
+      justify-content: flex-start; /* Gluing bars together */
+      align-items: flex-start; /* Align bars from the top */
+      border: 6px solid #0e0e0e;
+      overflow: hidden;
+      background-image:url('ba.png');
+    }
+
+    .bar {
+      width: 140px;
+      background-color: #ff5733;
+      height: 200px; /* Bar height set to fill container */
+      animation: moveUpDown 2s infinite ease-in-out;
+      animation-timing-function: ease-in-out;
+      align-self: flex-start;
+      animation-iteration-count: 5;
+    }
+
+    .bar:nth-child(2) {
+      height: 200px;
+      animation-duration: 3s;
+      animation-delay: 0.5s;
+      background-color: rgba(218, 29, 155, 0.838);
+    }
+
+    .bar:nth-child(3) {
+      background-color: #ffc133;
+      height: 200px;
+      animation-duration: 2.5s;
+      animation-delay: 1s;
+    }
+
+    .bar:nth-child(4) {
+      background-color: #adff33;
+      height: 200px;
+      animation-duration: 4s;
+      animation-delay: 1.5s;
+    }
+
+    .bar:nth-child(5) {
+      background-color: #ff33ad;
+      height: 200px;
+      animation-duration: 3.5s;
+      animation-delay: 2s;
+    }
+
+    /* Keyframes for moving bars from top to bottom */
+    @keyframes moveUpDown {
+      0%, 100% {
+        transform: translateY(0); /* Bar starts at the top */
+      }
+      50% {
+        transform: translateY(100%); /* Bar moves to the bottom */
+      }
+    }
+
+    #controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+    }
+
+    #start { background-color: #28a745; }
+    #stop { background-color: #dc3545; }
+    #reset { background-color: #007bff; }
+  </style>
+</head>
+<body>
+  <div id="animationContainer">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <div id="controls">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <script>
+    const bars = document.querySelectorAll('.bar');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const resetBtn = document.getElementById('reset');
+
+    function setAnimationState(state) {
+      bars.forEach(bar => {
+        bar.style.animationPlayState = state;
+      });
+    }
+
+    startBtn.addEventListener('click', () => setAnimationState('running'));
+    stopBtn.addEventListener('click', () => setAnimationState('paused'));
+    resetBtn.addEventListener('click', () => {
+      bars.forEach(bar => {
+        bar.style.animation = 'none';
+        setTimeout(() => {
+          bar.style.animation = '';
+        }, 10);
+      });
+      setAnimationState('paused');
+    });
+
+    // Initially, pause the animation
+    setAnimationState('paused');
+  </script>
+</body>
+</html>
